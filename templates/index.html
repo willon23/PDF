@@ -13,17 +13,31 @@ input[type="file"] {
     cursor: pointer;
 }
 
-div1 {
-    border-radius: 5px;
-    width: 300px;
-    border: 5px solid deepskyblue;
-    margin: 25px;
+
+
+.note {
+  border: 5px solid deepskyblue;
+  padding: 5px;
+  width: 290px;
+  height: 32px;
+}
+.title {
+  border: 5px solid deepskyblue;
+  padding: 5px;
+  width: 90px;
+  height: 15px;
+}
+
+p {
+    font-style: verdana;
 }
 
 
 </style>
 
-<title>Converter Imagens em PDF</title> <div class="box1"> <a> <img src="https://images2.imgbox.com/0c/9b/8QwLOxBz_o.png" alt="image host"/></a> </div>
+<title>Converter Imagens em PDF</title>
+
+<div class="box1"> <a> <img src="https://images2.imgbox.com/0c/9b/8QwLOxBz_o.png" alt="image host"/></a> </div>
 
 </head>
 <body> <font face="verdana" color="#00BFFF">
@@ -44,30 +58,83 @@ Transforme imagens em PDF de forma prática, rápida e fácil!<h5>
 
 <input type="file" id="imagem-usuario" onchange="converterImagem();" />
 
-<p><div1>1- Clique em "Selecionar Imagem" e espere o arquivo ser carregado.</div1></p>
+<div class="container">
 
-<p><div1>2- Aguarde o download ser iniciado.</div1></p>
+    <p class="title"> Como usar ?</p>
 
-<p><div1>3- Pronto! Sua imagem foi convertida para PDF.</div1></p>
+    <p class="note"> 1- Clique em "Selecionar Imagem" e espere o arquivo ser carregado.</p>
 
+    <p class="note"> 2- Aguarde o download ser iniciado.</p>
+
+    <p class="note"> 3- Pronto! Sua imagem foi convertida para PDF.</p>
+</div>
 </center>
 <!-- Receber e apresentar a imagem para o usuario apos converte para Base64 --> <center><div id="apresentar-imagem"></div></center>
-<!-- Incluir a biblioteca para gerar PDF--> <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
-<script> // Funcao converter imagem para base64 function converterImagem() {
-// Receber o arquivo do formulario var receberArquivo = document.getElementById("imagem-usuario").files; //console.log(receberArquivo);
-// Verificar se existe o arquivo if (receberArquivo.length > 0) {
-// Carregar a imagem var carregarImagem = receberArquivo[0]; //console.log(carregarImagem);
-// FileReader - permite ler o conteudo do arquivo do computador do usuario var lerArquivo = new FileReader();
-// O evento onload ocorre quando um objeto he carregado lerArquivo.onload = function (arquivoCarregado) { // Converter a imagem para base64 var imagemBase64 = arquivoCarregado.target.result; //console.log(imagemBase64);
-//**** INICIO ENVIAR IMAGEM PARA O HTML *****/ // Cria o elemento HTML var novaImagem = document.createElement('img');
-// Atribuir a imagem para o atributo src novaImagem.src = imagemBase64; //**** FIM ENVIAR IMAGEM PARA O HTML *****/
-// Enviar imagem para o HTML document.getElementById("apresentar-imagem").innerHTML = novaImagem.outerHTML;
-// Recuperar a imagem base64 do HTML //console.log(document.getElementById("apresentar-imagem").innerHTML);
-//**** INICIO GERAR PDF *****/ // Instanciar o jsPDF var doc = new jsPDF();
-// Texto que deve estar no PDF doc.text('Este arquivo foi convertido em AllPdf!', 15, 15);
-// Imagem que deve estar no PDF doc.addImage(imagemBase64, 15, 25, 50, 50);
-// Gerar PDF doc.save('Output.pdf');
-//**** FIM GERAR PDF *****/ }
-// O metodo readAsDataURL e usado para ler o conteudo lerArquivo.readAsDataURL(carregarImagem); } } </script>
+    <!-- Incluir a biblioteca para gerar PDF-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+        integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // Funcao converter imagem para base64
+        function converterImagem() {
+
+            // Receber o arquivo do formulario
+            var receberArquivo = document.getElementById("imagem-usuario").files;
+            //console.log(receberArquivo);
+
+            // Verificar se existe o arquivo
+            if (receberArquivo.length > 0) {
+
+                // Carregar a imagem
+                var carregarImagem = receberArquivo[0];
+                //console.log(carregarImagem);
+
+                // FileReader - permite ler o conteudo do arquivo do computador do usuario
+                var lerArquivo = new FileReader();
+
+                // O evento onload ocorre quando um objeto he carregado
+                lerArquivo.onload = function (arquivoCarregado) {
+                    // Converter a imagem para base64
+                    var imagemBase64 = arquivoCarregado.target.result;
+                    //console.log(imagemBase64);
+
+                    //**** INICIO ENVIAR IMAGEM PARA O HTML *****/
+                    // Cria o elemento HTML
+                    var novaImagem = document.createElement('img');
+
+                    // Atribuir a imagem para o atributo src
+                    novaImagem.src = imagemBase64;
+                    //**** FIM ENVIAR IMAGEM PARA O HTML *****/
+
+                    // Enviar imagem para o HTML
+                    document.getElementById("apresentar-imagem").innerHTML = novaImagem.outerHTML;
+
+                    // Recuperar a imagem base64 do HTML
+                    //console.log(document.getElementById("apresentar-imagem").innerHTML);
+
+                    //**** INICIO GERAR PDF *****/
+                    // Instanciar o jsPDF
+                    var doc = new jsPDF();
+
+                    // Texto que deve estar no PDF
+                    doc.text('Este arquivo foi convertido em AllPdf!', 15, 15);
+
+                    // Imagem que deve estar no PDF
+                    doc.addImage(imagemBase64, 15, 25, 50, 50);
+
+                    // Gerar PDF
+                    doc.save('Output.pdf');
+
+                    //**** FIM GERAR PDF *****/
+                }
+
+                // O metodo readAsDataURL e usado para ler o conteudo
+                lerArquivo.readAsDataURL(carregarImagem);
+            }
+        }
+    </script>
+
 </body>
+
 </html>
